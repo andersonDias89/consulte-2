@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import express from 'express';
 import { AppDataSource } from './data-source';
 import { Medico } from './entity/Medico';
@@ -17,6 +18,19 @@ app.get('/medicos', async (req, res) => {
     const medicos = await medicoRepo.find();
     res.json(medicos);
 });
+
+app.post('/medicos', async (req, res) => {
+    try {
+        const medicoRepo = AppDataSource.getRepository(Medico);
+        const novoMedico = medicoRepo.create(req.body);
+        const resultado = await medicoRepo.save(novoMedico);
+        res.status(201).json(resultado);
+    } catch (error: any) { // Mudança aqui para 'any' se você está seguro sobre a natureza do erro
+        // Caso ocorra algum erro, enviar uma resposta de erro
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
