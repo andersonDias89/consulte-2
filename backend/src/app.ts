@@ -1,12 +1,20 @@
 import "reflect-metadata";
 import express from 'express';
+import cors from 'cors';
 import { AppDataSource } from './data-source';
 import { Medico } from './entity/Medico';
 
+
+
+
 const app = express();
-const port = 4000; // Ou outra porta de sua escolha
+const port = 4001; 
 
 app.use(express.json());
+
+app.use(cors({
+    origin: 'http://localhost:5173' // A porta do seu frontend
+  }));// Ou outra porta de sua escolha
 
 AppDataSource.initialize().then(() => {
     console.log('Conexão com o banco de dados estabelecida com sucesso.');
