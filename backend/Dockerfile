@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Expõe a porta que sua aplicação usa
-EXPOSE 3000
+EXPOSE 4001
 
 # Comando para rodar a aplicação
-CMD ["node", "dist/data-source.js"]
+CMD ["node", "dist/app.js"]
